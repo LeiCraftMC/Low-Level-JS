@@ -1,33 +1,32 @@
 {
     "name": "low-level",
-	"version": "1.0.1",
+	"version": "1.0.4",
 	"module": "./dist/esm/index.js",
 	"main": "./dist/cjs/index.js",
-	"types": "./dist/types/index.d.ts",
+	"types": "./dist/esm/index.d.ts",
 	"exports": {
 		"./package.json": "./package.json",
 		".": {
 			"import": "./dist/esm/index.js",
 			"require": "./dist/cjs/index.js",
-			"types": "./dist/types/index.d.ts"
+			"types": "./dist/esm/index.d.ts"
 		},
 		"./uint": {
 			"import": "./dist/esm/uint/index.js",
 			"require": "./dist/cjs/uint/index.js",
-			"types": "./dist/types/uint/index.d.ts"
+			"types": "./dist/esm/uint/index.d.ts"
 		},
 		"./uint/map": {
 			"import": "./dist/esm/uint/map.js",
 			"require": "./dist/cjs/uint/map.js",
-			"types": "./dist/types/uint/map.d.ts"
+			"types": "./dist/esm/uint/map.d.ts"
 		}
 	},
 	"scripts": {
 		"test": "echo 'No Test Available' && exit 0",
-		"build": "bun run build:esm && bun run build:cjs && bun run build:types",
+		"build": "bun run build:esm && bun run build:cjs",
 		"build:esm": "rm -rf dist/esm && tsc -p tsconfig.esm.json",
 		"build:cjs": "rm -rf dist/cjs && tsc -p tsconfig.cjs.json",
-		"build:types": "rm -rf dist/types && tsc -p tsconfig.types.json",
 		"release": "bun run build && bun run test && bun publish"
 	},
     "repository": {
