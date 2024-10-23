@@ -31,7 +31,7 @@ export type BinLike = Uint | Buffer;
 
 export class UintUtils {
 
-    static correctByteLengthBuffer(buffer: Buffer, correctByteLength: number) {
+    static fixBufferByteLength(buffer: Buffer, correctByteLength: number) {
         if (buffer.byteLength === correctByteLength) {
             return buffer;
         }
@@ -40,8 +40,8 @@ export class UintUtils {
         return newBuffer;
     }
 
-    static correctByteLengthUint<T>(CLS: New<T>, uint: Uint, correctByteLength: number) {
-        return new CLS(this.correctByteLengthBuffer(uint.getRaw(), correctByteLength));
+    static fixUintByteLength<T>(CLS: New<T>, uint: Uint, correctByteLength: number) {
+        return new CLS(this.fixBufferByteLength(uint.getRaw(), correctByteLength));
     }
 
 }
@@ -99,7 +99,7 @@ export class Uint {
     public static concat(list: (Uint | Uint8Array)[], totalLength?: number) {
         return new this(Buffer.concat(
             list.map((item) => {
-                return item instanceof Uint ? item.getRaw() : item;
+                return item instanceof Uint ? (item.getRaw()) : item;
             }), totalLength
         ));
     }
@@ -228,7 +228,7 @@ export class Uint {
 
     protected addUint(value: Uint) {
         if (this.buffer.byteLength !== value.buffer.byteLength) {
-            value = UintUtils.correctByteLengthUint(this.constructor as New<this>, value, this.buffer.byteLength)
+            value = UintUtils.fixUintByteLength(this.constructor as New<this>, value, this.buffer.byteLength)
         }
         let carry = 0;
         for (let i = this.buffer.byteLength - 1; i >= 0; i--) {
@@ -251,7 +251,7 @@ export class Uint {
 
     protected subUint(value: Uint) {
         if (this.buffer.byteLength !== value.buffer.byteLength) { // @ts-ignore
-            value = UintUtils.correctByteLengthUint(this.constructor as New<this>, value, this.buffer.byteLength)
+            value = UintUtils.fixUintByteLength(this.constructor as New<this>, value, this.buffer.byteLength)
         }
         let carry = 0;
         for (let i = this.buffer.byteLength - 1; i >= 0; i--) {
@@ -283,7 +283,7 @@ export class Uint {
         if (typeof value === "number") {
             value = Uint.from(value, this.buffer.byteLength);
         } else if (this.buffer.byteLength !== value.buffer.byteLength) {
-            value = UintUtils.correctByteLengthUint(Uint, value, this.buffer.byteLength)
+            value = UintUtils.fixUintByteLength(Uint, value, this.buffer.byteLength)
         }
         return this.buffer.compare(value.buffer);
     }
@@ -320,7 +320,7 @@ export class FixedUint extends Uint {
 
     public static create<T>(this: New<T>, input: Uint | Buffer): T;
     public static create(input: Uint | Buffer) {
-        return new this(UintUtils.correctByteLengthBuffer((input instanceof Uint ? input.getRaw() : input), this.byteLength));
+        return new this(UintUtils.fixBufferByteLength((input instanceof Uint ? input.getRaw() : input), this.byteLength));
     }
 
     public static alloc<T>(this: New<T>, fill?: string | Uint8Array | number): T;
@@ -349,7 +349,7 @@ export class FixedUint extends Uint {
         } else {
             buffer = Buffer.from(input, arg2, arg3);
         }
-        return new this(UintUtils.correctByteLengthBuffer(buffer, this.byteLength));
+        return new this(UintUtils.fixBufferByteLength(buffer, this.byteLength));
     }
 
 }
