@@ -1,0 +1,22 @@
+{
+  "name": "low-level",
+  "module": "src/index.ts",
+  "repository": {
+		"type": "git",
+		"url": "git+https://github.com/LeiCraftMC/Low-Level-JS"
+	},
+	"author": "LeiCraft_",
+	"publisher": "LeiCraft_MC",
+	"license": "AGPL-3.0-only",
+	"bugs": {
+		"url": "https://github.com/LeiCraftMC/Low-Level-JS/issues"
+	},
+	"homepage": "https://github.com/LeiCraftMC/Low-Level-JS#readme",
+  "devDependencies": {
+    "@types/bun": "latest",
+    "typescript": "^5.6.3"
+  },
+  "peerDependencies": {
+    "typescript": ">= 5.0.0"
+  }
+}
