@@ -1,4 +1,4 @@
-import { type BasicUintConstructable, Uint } from "./index.js";
+import { type BasicUintConstructable, Uint } from "./uint.js";
 
 abstract class BMapIteratorLike<T, M> implements IterableIterator<T> {
 
