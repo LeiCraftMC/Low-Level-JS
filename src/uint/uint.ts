@@ -84,12 +84,23 @@ export class Uint {
         return this.buffer.toString(encoding);
     }
 
-    /** Supports only a number up to (2^48)-1 */
+    public valueOf() {
+        return this.toInt();
+    }
+
+    /**
+     * Supports only a number up to (2^48)-1
+     * For bigger numbers use {@link Uint.toBigInt}
+     */
     public toInt() {
         if (this.buffer.byteLength > 6) {
             return this.buffer.readUintBE(this.buffer.byteLength - 6, 6);
         }
         return this.buffer.readUintBE(0, this.buffer.byteLength);
+    }
+
+    public toBigInt() {
+        return BigInt("0x" + this.toHex());
     }
 
     public getRaw() {
@@ -264,7 +275,7 @@ export class Uint {
         switch (hint) {
             case "string": return this.toHex();
             case "number": return this.toInt();
-            default: return this.toHex();
+            default: return this.toBigInt();
         }
     }
 

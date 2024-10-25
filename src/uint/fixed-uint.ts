@@ -98,10 +98,6 @@ export abstract class AbstractBigUint extends FixedUint {
         return Uint.from(0);
     }
 
-    public toBigInt() {
-        return BigInt("0x" + this.toHex());
-    }
-
 }
 
 // @ts-ignore
