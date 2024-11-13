@@ -78,7 +78,7 @@ export abstract class AbstractBinaryMap<K extends Uint, V> {
         return Object.keys(this.store).length;
     }
 
-    protected get(key: K) {
+    protected get(key: K): V | undefined {
         return this.store[key.toHex()];
     }
 
