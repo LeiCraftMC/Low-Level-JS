@@ -121,7 +121,7 @@ export abstract class AbstractBinaryMap<K extends Uint, V> {
     }
 }
 
-export abstract class BasicBinaryMap<K extends Uint, V> extends AbstractBinaryMap<K, V> {
+export class BasicBinaryMap<K extends Uint, V> extends AbstractBinaryMap<K, V> {
 
     constructor(
         protected readonly CLS: BasicUintConstructable<K>,
