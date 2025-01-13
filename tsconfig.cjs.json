@@ -3,6 +3,7 @@
 	"compilerOptions": {
 		"outDir": "./dist/cjs",
 		"declaration": true,
-		"module": "commonjs"
+		"module": "commonjs",
+		"removeComments": false
 	},
 }
