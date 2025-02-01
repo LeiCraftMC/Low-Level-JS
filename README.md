@@ -3,7 +3,7 @@ Low-Level-JS is a lightweight and efficient library designed for working with bi
 
 ## Usage
 
-```javascript
+```ts
 import { Uint8, Uint16, Uint32 } from 'low-level';
 
 // Creating Uint instances
