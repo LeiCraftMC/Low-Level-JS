@@ -120,6 +120,10 @@ export class Uint {
         return enc === "uint" ? Uint.from(this.buffer.byteLength) : this.buffer.byteLength;
     }
 
+    public get(offset: number, length = 1) {
+        return new Uint(this.buffer.subarray(offset, offset + length));
+    }
+
     public set(list: ArrayLike<number> | Uint, offset?: number) {
         this.buffer.set((list instanceof Uint ? list.getRaw() : list), offset);
     }
