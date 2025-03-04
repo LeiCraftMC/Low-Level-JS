@@ -1,6 +1,6 @@
 {
     "name": "low-level",
-	"version": "1.0.12",
+	"version": "1.0.13",
 	"module": "./dist/esm/index.js",
 	"main": "./dist/cjs/index.js",
 	"types": "./dist/types/index.d.ts",
@@ -30,7 +30,8 @@
     ],
     "homepage": "https://github.com/LeiCraftMC/Low-Level-JS#readme",
     "devDependencies": {
-        "@types/bun": "^1.2.1",
+        "bun": "^1.2.5",
+        "@types/bun": "^1.2.5",
         "typescript": "^5.6.3",
         "@types/node": "^22.7.3"
     }
