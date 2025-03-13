@@ -204,6 +204,9 @@ export class Uint {
         return this.compare(value) === 0;
     }
 
+    /**
+     * @deprecated Use {@link Uint.eq} with ! operator instead
+     */
     public eqn(value: NumberLike) {
         return this.compare(value) !== 0;
     }
