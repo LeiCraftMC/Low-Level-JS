@@ -169,6 +169,16 @@ export class Uint {
         const clone = this.clone(); clone.isub(value); return clone;
     }
 
+    public imul(value: NumberLike) {
+        if (typeof value === "object") {
+            return this.mulUint(value);
+        }
+        return this.mulNumber(value);
+    }
+    public mul(value: NumberLike) {
+        const clone = this.clone(); clone.imul(value); return clone;
+    }
+
     public idiv(value: NumberLike, returnRest = false) {
         if (typeof value === "object") {
             return this.divUint(value, returnRest);
@@ -235,7 +245,7 @@ export class Uint {
     }
 
     protected subUint(value: Uint) {
-        if (this.buffer.byteLength !== value.buffer.byteLength) { // @ts-ignore
+        if (this.buffer.byteLength !== value.buffer.byteLength) {
             value = UintUtils.fixUintByteLength(this.constructor as New<this>, value, this.buffer.byteLength)
         }
         let carry = 0;
@@ -247,6 +257,26 @@ export class Uint {
                 this.buffer[i] = (sum % 256) + 256;
             }
             carry = Math.floor(sum / 256);
+        }
+    }
+
+    protected mulUint(value: Uint) {
+        if (this.buffer.byteLength !== value.buffer.byteLength) {
+            value = UintUtils.fixUintByteLength(this.constructor as New<this>, value, this.buffer.byteLength)
+        }
+        let carry = 0;
+        for (let i = 0; i < this.buffer.byteLength; i++) {
+            const product = this.buffer[i] * value.buffer[i] + carry;
+            this.buffer[i] = product % 256;
+            carry = Math.floor(product / 256);
+        }
+    }
+    protected mulNumber(value: number) {
+        let carry = 0;
+        for (let i = this.buffer.byteLength - 1; i >= 0; i--) {
+            const product = this.buffer[i] * value + carry;
+            this.buffer[i] = product % 256;
+            carry = Math.floor(product / 256);
         }
     }
 
