@@ -3,7 +3,7 @@ import { Uint64 } from "../src/uint/fixed-uint";
 
 describe("math", () => {
 
-    test("basic_math", () => {
+    test("basic_math", async () => {
 
         let int = Math.floor(Math.random() * 1_000_000);
         const uint = Uint64.from(int);

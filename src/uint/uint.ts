@@ -72,6 +72,12 @@ export class Uint {
     }
 
 
+    public static isUint<T>(this: New<T>, input: any): input is T;
+    public static isUint(input: any) {
+        return input instanceof this;
+    }
+
+
     public clone() {
         return (this.constructor as BasicUintConstructable<this>).from(this.buffer);
     }
