@@ -3,6 +3,7 @@
 .github
 
 bun.lockb
+bun.toml
 node_modules
 
 tsconfig.json
