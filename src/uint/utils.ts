@@ -26,3 +26,27 @@ export class UintUtils {
     }
 
 }
+
+export abstract class AbstractIterator<T, M> implements IterableIterator<T> {
+
+    constructor(protected entries: IterableIterator<M>) {}
+
+    public [Symbol.iterator]() { return this; }
+
+    public next(): IteratorResult<T> {
+        const result = this.entries.next();
+        if (result.done) {
+            return { done: true, value: undefined as M };
+        }
+        return { done: false, value: this._next(result.value) };
+    }
+    protected abstract _next(value: M): T;
+
+    public all(): T[] {
+        const result: T[] = [];
+        for (const value of this) {
+            result.push(value);
+        }
+        return result;
+    }
+}

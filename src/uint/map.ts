@@ -1,30 +1,8 @@
 import { type BasicUintConstructable, Uint } from "./uint.js";
+import { AbstractIterator } from "./utils.js";
 
-abstract class BMapIteratorLike<T, M> implements IterableIterator<T> {
 
-    constructor(protected mapEntries: IterableIterator<M>) {}
-
-    public [Symbol.iterator]() { return this; }
-
-    public next(): IteratorResult<T> {
-        const result = this.mapEntries.next();
-        if (result.done) {
-            return { done: true, value: undefined as M };
-        }
-        return { done: false, value: this._next(result.value) };
-    }
-    protected abstract _next(value: M): T;
-
-    public all(): T[] {
-        const result: T[] = [];
-        for (const value of this) {
-            result.push(value);
-        }
-        return result;
-    }
-}
-
-class BMapEntriesIterator<K extends Uint, V> extends BMapIteratorLike<[K, V], [string, any]> {
+class BMapEntriesIterator<K extends Uint, V> extends AbstractIterator<[K, V], [string, any]> {
     constructor(protected CLS: BasicUintConstructable<K>, mapEntries: IterableIterator<[string, V]>) {
         super(mapEntries);
     }
@@ -33,7 +11,7 @@ class BMapEntriesIterator<K extends Uint, V> extends BMapIteratorLike<[K, V], [s
     }
 }
 
-class BMapKeysIterator<K extends Uint> extends BMapIteratorLike<K, string> {
+class BMapKeysIterator<K extends Uint> extends AbstractIterator<K, string> {
     constructor(protected CLS: BasicUintConstructable<K>, mapEntries: IterableIterator<string>) {
         super(mapEntries);
     }
@@ -42,7 +20,7 @@ class BMapKeysIterator<K extends Uint> extends BMapIteratorLike<K, string> {
     }
 }
 
-class BMapValuesIterator<V> extends BMapIteratorLike<V, V> {
+class BMapValuesIterator<V> extends AbstractIterator<V, V> {
     constructor(mapEntries: IterableIterator<V>) {
         super(mapEntries);
     }
@@ -52,7 +30,6 @@ class BMapValuesIterator<V> extends BMapIteratorLike<V, V> {
 }
 
 export {
-    type BMapIteratorLike,
     type BMapEntriesIterator,
     type BMapKeysIterator,
     type BMapValuesIterator,
