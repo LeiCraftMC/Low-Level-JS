@@ -58,7 +58,7 @@ export {
     type BMapValuesIterator,
 }
 
-
+/*
 export abstract class AbstractBinaryMap<K extends Uint, V> {
     
     protected readonly store: {[key: string]: V} = {};
@@ -124,7 +124,7 @@ export abstract class AbstractBinaryMap<K extends Uint, V> {
 export class BasicBinaryMap<K extends Uint, V> extends AbstractBinaryMap<K, V> {
 
     constructor(
-        protected readonly CLS: BasicUintConstructable<K>,
+        CLS: BasicUintConstructable<K>,
         entries?: readonly (readonly [K, V])[]
     ) {
         super(CLS, entries);
@@ -152,6 +152,76 @@ export class BasicBinaryMap<K extends Uint, V> extends AbstractBinaryMap<K, V> {
     public clear() { super.clear(); }
 
     public get [Symbol.toStringTag]() { return this.getStringTag(); }
+}*/
+
+export abstract class BasicBinaryMap<K extends Uint, V> {
+    
+    protected readonly store: {[key: string]: V} = {};
+
+    public constructor(
+        protected readonly CLS: BasicUintConstructable<K>,
+        entries?: readonly (readonly [K, V])[]
+    ) {
+        if (entries) {
+            for (const [key, value] of entries) {
+                this.set(key, value);
+            }
+        }
+    }
+
+    get size() {
+        return Object.keys(this.store).length;
+    }
+
+    public get(key: K): V | undefined {
+        return this.store[key.toHex()];
+    }
+
+    public set(key: K, value: V) {
+        return this.store[key.toHex()] = value;
+    }
+
+    public delete(key: K) {
+        return delete this.store[key.toHex()];
+    }
+
+    public has(key: K) {
+        return key.toHex() in this.store;
+    }
+
+    public [Symbol.iterator]() {
+        return this.entries();
+    }
+
+    public entries() {
+        return new BMapEntriesIterator(this.CLS, Object.entries(this.store).values());
+    }
+    public keys() {
+        return new BMapKeysIterator(this.CLS, Object.keys(this.store).values());
+    }
+    public values() {
+        return new BMapValuesIterator(Object.values(this.store).values());
+    }
+
+    public forEach(callbackfn: (value: V, key: K) => void, thisArg?: any) {
+        for (const [key, value] of this.entries()) {
+            callbackfn.call(thisArg, value, key);
+        };
+    }
+
+    public clear() {
+        for (const key of this.keys()) {
+            this.delete(key);
+        }
+    }
+
+    protected getStringTag() {
+        return this.constructor.name;
+    }
+
+    public get [Symbol.toStringTag]() {
+        return this.getStringTag();
+    }
 }
 
 export class UintMap<V> extends BasicBinaryMap<Uint, V> {
