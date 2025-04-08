@@ -131,7 +131,7 @@ export class BasicBinaryMap<K extends Uint, V> extends AbstractBinaryMap<K, V> {
     public get [Symbol.toStringTag]() { return this.getStringTag(); }
 }*/
 
-export abstract class BasicBinaryMap<K extends Uint, V> {
+export class BasicBinaryMap<K extends Uint, V> {
     
     protected readonly store: {[key: string]: V} = {};
 
