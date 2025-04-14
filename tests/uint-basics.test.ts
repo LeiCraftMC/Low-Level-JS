@@ -1,6 +1,5 @@
 import { describe, test, expect } from "bun:test";
-import { Uint } from "../src/uint/uint.js";
-import { Uint256 } from "../src/uint/fixed-uint.js";
+import { Uint, Uint256 } from "../src/index.js";
 
 
 describe("Uint Basics", () => {

@@ -1,5 +1,5 @@
 import { describe, test } from "bun:test";
-import { Uint } from "../src/uint/uint.js";
+import { Uint } from "../src/index.js";
 /*
 describe("Bitwise operators", () => {
     test("Bitwise AND", () => {

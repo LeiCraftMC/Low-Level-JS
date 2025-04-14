@@ -1,5 +1,5 @@
 import { describe, test, expect } from "bun:test";
-import { Uint64 } from "../src/uint/fixed-uint";
+import { Uint64 } from "../src/index.js";
 
 describe("math", () => {
 
