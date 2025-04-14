@@ -6,7 +6,7 @@ class BSetEntriesIterator<K extends Uint> extends AbstractIterator<[K, K], [stri
         super(setEntries);
     }
     protected _next(value: [string, string]): [K, K] {
-        const decodedKey = this.CLS.from(value[0], "utf8");
+        const decodedKey = this.CLS.from(value[0], "hex");
         return [decodedKey, decodedKey];
     }
 }
@@ -16,7 +16,7 @@ class BSetIterator<K extends Uint> extends AbstractIterator<K, string> {
         super(setEntries);
     }
     protected _next(value: string): K {
-        return this.CLS.from(value, "utf8");
+        return this.CLS.from(value, "hex");
     }
 }
 
@@ -42,16 +42,16 @@ export class BasicBinarySet<K extends Uint> {
     }
 
     public add(value: K) {
-        this.store.add(value.toString("utf8"));
+        this.store.add(value.toHex());
         return value;
     }
 
     public delete(value: K) {
-        return this.store.delete(value.toString("utf8"));
+        return this.store.delete(value.toHex());
     }
 
     public has(value: K) {
-        return this.store.has(value.toString("utf8"));
+        return this.store.has(value.toHex());
     }
 
     public [Symbol.iterator]() {

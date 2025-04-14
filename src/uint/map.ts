@@ -7,7 +7,7 @@ class BMapEntriesIterator<K extends Uint, V> extends AbstractIterator<[K, V], [s
         super(mapEntries);
     }
     protected _next(value: [string, V]): [K, V] {
-        return [this.CLS.from(value[0], "utf8"), value[1]];
+        return [this.CLS.from(value[0], "hex"), value[1]];
     }
 }
 
@@ -16,7 +16,7 @@ class BMapKeysIterator<K extends Uint> extends AbstractIterator<K, string> {
         super(mapEntries);
     }
     protected _next(value: string): K {
-        return this.CLS.from(value, "utf8");
+        return this.CLS.from(value, "hex");
     }
 }
 
@@ -151,19 +151,19 @@ export class BasicBinaryMap<K extends Uint, V> {
     }
 
     public get(key: K): V | undefined {
-        return this.store[key.toString("utf8")];
+        return this.store[key.toHex()];
     }
 
     public set(key: K, value: V) {
-        return this.store[key.toString("utf8")] = value;
+        return this.store[key.toHex()] = value;
     }
 
     public delete(key: K) {
-        return delete this.store[key.toString("utf8")];
+        return delete this.store[key.toHex()];
     }
 
     public has(key: K) {
-        return key.toString("utf8") in this.store;
+        return key.toHex() in this.store;
     }
 
     public [Symbol.iterator]() {
