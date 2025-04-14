@@ -158,8 +158,15 @@ export class BasicBinaryMap<K extends Uint, V> {
         return this.store[key.toHex()] = value;
     }
 
+    /**
+     * Deletes the key from the map.
+     * @param key The key-value pair to delete
+     * @returns true if the key was present and deleted, false otherwise
+     */
     public delete(key: K) {
-        return delete this.store[key.toHex()];
+        const hasKey = this.has(key);
+        delete this.store[key.toHex()];
+        return hasKey;
     }
 
     public has(key: K) {
